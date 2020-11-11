@@ -1,8 +1,9 @@
 import user from './user'
-import pages from './pages'
+import app from './app'
 
 export default {
   modules: {
     user,
+    app,
   },
 }

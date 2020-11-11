@@ -2,27 +2,31 @@
   <header>
     <div class="wrapper">
       <div class="menu">
-        <i class="sidebar-icon fas fa-bars"></i>
+        <button type="button" class="sidebar-icon" @click="toggleSideNav">
+          <i class="fas fa-bars"></i>
+        </button>
         <h1 class="logo">
           <nuxt-link to="/">미요미</nuxt-link>
         </h1>
-        <Nav />
+        <HeaderNav />
       </div>
       <div class="menu">
         <div v-if="user.uid" class="username">
           안녕하세요, {{ user.username }}님
         </div>
         <Button
+          v-if="user.uid"
           backgroundColor="white"
           color="black"
           label="로그아웃"
-          v-if="user.uid"
+          @click.native="logout"
         />
         <Button
+          v-if="!user.uid"
           backgroundColor="white"
           color="black"
           label="로그인"
-          v-if="!user.uid"
+          @click.native="login"
         />
       </div>
     </div>
@@ -30,15 +34,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Nav from '@/components/molecules/Nav'
+import { mapState, mapActions } from 'vuex'
+import HeaderNav from '@/components/molecules/HeaderNav'
 import Button from '@/components/atoms/Button'
 
 export default {
   name: 'Header',
-  components: { Button, Nav },
+  components: { Button, HeaderNav },
   computed: {
     ...mapState(['user']),
+  },
+  methods: {
+    ...mapActions({
+      toggleSideNav: 'app/toggleSideNav',
+      logout: 'user/logout',
+    }),
+    login: function () {
+      this.$store.dispatch('user/login', { uid: 1, username: 'Jason' })
+    },
   },
 }
 </script>
@@ -65,7 +78,7 @@ header .wrapper {
   max-width: 800pt;
   margin: 0 auto;
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  transition: padding 0.5s;
+  transition: padding 500ms;
 }
 
 header .menu {
@@ -86,7 +99,7 @@ header h1.logo > a {
 }
 
 header .menu .username {
-  margin-right: 8pt;
+  margin-right: 16pt;
 }
 
 header button + button {
@@ -97,6 +110,10 @@ header .sidebar-icon {
   cursor: pointer;
   margin-right: 8pt;
   padding: 8pt;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 12pt;
 }
 
 @media (max-width: 576px) {
@@ -108,12 +125,6 @@ header .sidebar-icon {
 @media (max-width: 768px) {
   header .wrapper {
     padding: 8pt;
-  }
-}
-
-@media (min-width: 768px) {
-  header .sidebar-icon {
-    display: none;
   }
 }
 </style>

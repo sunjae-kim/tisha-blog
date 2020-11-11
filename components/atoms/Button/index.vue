@@ -24,13 +24,13 @@ export default {
     },
   },
   computed: {
-    classes() {
+    classes: function () {
       return {
         button: true,
         outlined: this.outlined,
       }
     },
-    style() {
+    style: function () {
       return {
         color: this.color,
         backgroundColor: this.backgroundColor,

@@ -5,7 +5,7 @@ export const state = () => ({
     { id: 4, label: '잡담', path: 'talk' },
     { id: 5, label: '기타', path: 'etc' },
   ],
-  sideNav: true,
+  sideNav: false,
 })
 
 export const mutations = {

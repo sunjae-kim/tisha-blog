@@ -50,7 +50,7 @@ export default {
       logout: 'user/logout',
     }),
     login: function () {
-      this.$store.dispatch('user/login', { uid: 1, username: 'Jason' })
+      this.$store.dispatch('user/login', { uid: 1, username: 'Jason123' })
     },
   },
 }
@@ -74,17 +74,19 @@ header .wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8pt 24pt;
+  padding: 0 24pt;
   max-width: 800pt;
   margin: 0 auto;
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   transition: padding 500ms;
+  height: 100%;
 }
 
 header .menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
 header h1.logo {
@@ -126,5 +128,8 @@ header .sidebar-icon {
   header .wrapper {
     padding: 8pt;
   }
+}
+
+@media (min-width: 993px) {
 }
 </style>

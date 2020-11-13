@@ -7,16 +7,16 @@
           <a v-else @click="login">로그인</a>
         </li>
       </ul>
-      <ul v-if="active" class="menu">
+      <ul v-if="active" class="menu" :class="{ disabled: !isLoggedIn }">
         <p v-if="!isLoggedIn" class="message danger">
           로그인이 필요한 서비스입니다.
         </p>
-        <li :class="{ disabled: !isLoggedIn }">
+        <li >
           <nuxt-link to="/subscriptions" @click.native="toggleSideNav"
             >구독</nuxt-link
           >
         </li>
-        <li :class="{ disabled: !isLoggedIn }">
+        <li >
           <nuxt-link to="/history" @click.native="toggleSideNav"
             >기록</nuxt-link
           >
@@ -24,9 +24,11 @@
       </ul>
       <ul v-if="active" class="menu">
         <li v-for="category in categories" :key="category.id">
-          <nuxt-link :to="`/${category.path}`" @click.native="toggleSideNav">{{
-            category.label
-          }}</nuxt-link>
+          <nuxt-link
+            :to="`/categories/${category.path}`"
+            @click.native="toggleSideNav"
+            >{{ category.label }}</nuxt-link
+          >
         </li>
       </ul>
     </nav>
@@ -103,7 +105,7 @@ export default {
   height: 40pt;
 }
 
-.side-nav .menu > li.disabled:after {
+.side-nav .menu.disabled > li:after {
   content: '';
   position: absolute;
   display: inline-block;
@@ -111,7 +113,7 @@ export default {
   height: 100%;
 }
 
-.side-nav .menu > li.disabled > a {
+.side-nav .menu.disabled > li > a {
   color: gray;
 }
 
@@ -123,8 +125,7 @@ export default {
 }
 
 .side-nav .menu > li > a.nuxt-link-active {
-  color: rgb(0, 78, 162);
-  font-weight: 700;
+  color: rgba(0, 123, 255, 0.7);
 }
 
 .side-nav .menu .message {

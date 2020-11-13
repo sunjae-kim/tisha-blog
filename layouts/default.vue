@@ -16,5 +16,8 @@ export default {
     Header,
     SideNav,
   },
+  created: function () {
+    this.$store.dispatch('app/bindCategories')
+  },
 }
 </script>

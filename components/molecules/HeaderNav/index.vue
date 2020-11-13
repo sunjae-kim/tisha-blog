@@ -3,20 +3,21 @@
     <ul class="categories">
       <li
         v-for="category in categories"
-        :key="category.id"
-        @mouseenter="hovered = category.id"
+        :key="category.name"
+        @mouseenter="hovered = category.name"
         @mouseleave="hovered = ''"
       >
-        <nuxt-link :to="`/categories/${category.path}`">{{ category.label }}</nuxt-link>
+        <nuxt-link :to="`/categories/${category.name}`">{{
+          category.label
+        }}</nuxt-link>
         <ul
           :class="{
             'drop-down-menu': true,
-            active: hovered === category.id,
-            //active: true,
+            active: hovered === category.name,
           }"
         >
-          <li v-for="gallery in galleries" :key="gallery.id">
-            <nuxt-link :to="`/categories/${category.path}/${gallery.path}`">{{
+          <li v-for="gallery in category.galleries" :key="gallery.name">
+            <nuxt-link :to="`/categories/${category.name}/${gallery.name}`">{{
               gallery.label
             }}</nuxt-link>
           </li>
@@ -34,12 +35,6 @@ export default {
   data: function () {
     return {
       hovered: '',
-      galleries: [
-        { id: 1, label: '테스트1 테스트1 테스트1', path: 'test1' },
-        { id: 2, label: '테스트2', path: 'test2' },
-        { id: 4, label: '테스트3', path: 'test3' },
-        { id: 5, label: '테스트4', path: 'test4' },
-      ],
     }
   },
   computed: {

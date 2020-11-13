@@ -1,9 +1,9 @@
-import user from './user'
-import app from './app'
+import { vuexfireMutations } from 'vuexfire'
 
-export default {
-  modules: {
-    user,
-    app,
-  },
+export const state = () => ({})
+
+export const mutations = {
+  ...vuexfireMutations,
 }
+
+export const actions = {}

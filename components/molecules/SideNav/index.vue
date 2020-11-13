@@ -23,9 +23,9 @@
         </li>
       </ul>
       <ul v-if="active" class="menu">
-        <li v-for="category in categories" :key="category.id">
+        <li v-for="category in categories" :key="category.name">
           <nuxt-link
-            :to="`/categories/${category.path}`"
+            :to="`/categories/${category.name}`"
             @click.native="toggleSideNav"
             >{{ category.label }}</nuxt-link
           >

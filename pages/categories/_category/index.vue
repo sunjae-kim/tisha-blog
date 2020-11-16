@@ -3,5 +3,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  created: function () {
+    console.log(this.$route.params)
+  },
+}
 </script>

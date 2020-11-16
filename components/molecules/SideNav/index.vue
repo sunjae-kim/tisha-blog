@@ -1,5 +1,5 @@
 <template>
-  <fragment>
+  <div>
     <nav :class="classes">
       <ul v-if="active" class="menu">
         <li>
@@ -11,12 +11,12 @@
         <p v-if="!isLoggedIn" class="message danger">
           로그인이 필요한 서비스입니다.
         </p>
-        <li >
+        <li>
           <nuxt-link to="/subscriptions" @click.native="toggleSideNav"
             >구독</nuxt-link
           >
         </li>
-        <li >
+        <li>
           <nuxt-link to="/history" @click.native="toggleSideNav"
             >기록</nuxt-link
           >
@@ -33,7 +33,7 @@
       </ul>
     </nav>
     <Dimmer :active="active" @click.native="toggleSideNav" />
-  </fragment>
+  </div>
 </template>
 
 <script>

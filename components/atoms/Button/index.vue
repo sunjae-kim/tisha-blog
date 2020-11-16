@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :class="classes" :style="style">
+  <button :type="type" :class="classes" :style="style">
     {{ label }}
   </button>
 </template>
@@ -21,6 +21,10 @@ export default {
     },
     backgroundColor: {
       type: String,
+    },
+    type: {
+      type: String,
+      default: 'button',
     },
   },
   computed: {

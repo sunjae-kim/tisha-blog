@@ -1,9 +1,9 @@
 <template>
-  <fragment>
+  <div class="main">
     <Header />
     <SideNav />
     <Nuxt />
-  </fragment>
+  </div>
 </template>
 
 <script>
@@ -21,3 +21,10 @@ export default {
   },
 }
 </script>
+
+<style>
+.main {
+  height: 100%;
+  padding-top: 48pt;
+}
+</style>

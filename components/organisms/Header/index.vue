@@ -58,6 +58,9 @@ export default {
 
 <style>
 header {
+  position: fixed;
+  top: 0;
+  width: 100%;
   height: 48pt;
   color: white;
   background-color: rgb(0, 78, 162);
@@ -75,7 +78,7 @@ header .wrapper {
   align-items: center;
   justify-content: space-between;
   padding: 0 24pt;
-  max-width: 800pt;
+  max-width: 760pt;
   margin: 0 auto;
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   transition: padding 500ms;
@@ -128,8 +131,5 @@ header .sidebar-icon {
   header .wrapper {
     padding: 8pt;
   }
-}
-
-@media (min-width: 993px) {
 }
 </style>

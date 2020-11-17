@@ -25,6 +25,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import _ from 'lodash'
 import GalleryTitle from '@/components/molecules/GalleryTitle'
 import { formatTime } from '@/utils'
 
@@ -38,7 +39,9 @@ export default {
     ...mapActions({ getArticle: 'article/getArticle' }),
   },
   created: function () {
-    this.getArticle(this.$route.params)
+    if (_.isEmpty(this.article)) {
+      this.getArticle(this.$route.params)
+    }
   },
   filters: {
     formatTime,

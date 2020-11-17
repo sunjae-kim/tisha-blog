@@ -22,6 +22,7 @@ export const actions = {
       .doc(category)
       .collection('articles')
       .where('gallery', '==', gallery)
+      .orderBy('createdAt', 'desc')
     context.bindFirestoreRef('list', articlesRef)
   }),
   unbindArticles: firestoreAction(function (context) {

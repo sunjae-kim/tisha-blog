@@ -24,6 +24,7 @@
             <li>
               <nuxt-link
                 :to="`/categories/${$route.params.category}/${$route.params.gallery}/${article.id}`"
+                @click.native="$store.commit('article/SET_ARTICLE', article)"
                 >{{ article.title }}</nuxt-link
               >
             </li>

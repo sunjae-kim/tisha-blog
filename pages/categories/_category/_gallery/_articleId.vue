@@ -33,18 +33,27 @@ export default {
   name: 'ArticleDetail',
   components: { GalleryTitle },
   computed: {
-    ...mapState({ article: state => state.article.detail }),
+    ...mapState({
+      article: state => state.article.detail,
+      articleList: state => state.article.list,
+    }),
   },
   methods: {
-    ...mapActions({ getArticle: 'article/getArticle' }),
-  },
-  created: function () {
-    if (_.isEmpty(this.article)) {
-      this.getArticle(this.$route.params)
-    }
+    ...mapActions({
+      bindArticles: 'article/bindArticles',
+      setArticle: 'article/setArticle',
+      setCategoryAndGallery: 'app/setCategoryAndGallery',
+    }),
   },
   filters: {
     formatTime,
+  },
+  created: async function () {
+    if (_.isEmpty(this.article)) {
+      await this.bindArticles(this.$route.params)
+      this.setArticle(this.$route.params.articleId)
+      this.setCategoryAndGallery(this.$route.params)
+    }
   },
   destroyed: function () {
     this.$store.commit('article/SET_ARTICLE', {})

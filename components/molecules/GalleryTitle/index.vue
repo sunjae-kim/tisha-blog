@@ -1,34 +1,31 @@
 <template>
   <p class="gallery-title">
-    <nuxt-link :to="`/categories/${category}/${gallery}`">{{
-      title
-    }}</nuxt-link>
+    <nuxt-link :to="category.path">{{ category.label }}</nuxt-link>
+    <span v-if="gallery.label">
+      ·
+      <nuxt-link :to="gallery.path">{{ gallery.label }}</nuxt-link>
+    </span>
   </p>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'GalleryTitle',
-  props: {
-    gallery: {
-      type: String,
-    },
-    category: {
-      type: String,
-    },
-  },
   computed: {
-    ...mapState({ categories: state => state.app.categories }),
-    title: function () {
-      const category = this.categories.find(
-        category => category.name === this.category
-      )
-      const gallery =
-        category &&
-        category.galleries.find(gallery => gallery.name === this.gallery)
-      return category ? `${category.label} ∙ ${gallery.label}` : ''
+    ...mapGetters({ labels: 'app/labels' }),
+    category: function () {
+      return {
+        path: `/categories/${this.$route.params.category}`,
+        label: this.labels.category,
+      }
+    },
+    gallery: function () {
+      return {
+        path: `/categories/${this.$route.params.category}/${this.$route.params.gallery}`,
+        label: this.labels.gallery,
+      }
     },
   },
 }

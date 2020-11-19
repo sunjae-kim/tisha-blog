@@ -17,28 +17,26 @@ export const mutations = {
 
 export const actions = {
   bindArticles: firestoreAction(function (context, { category, gallery }) {
-    const articlesRef = db
-      .collection('categories')
-      .doc(category)
-      .collection('articles')
-      .where('gallery', '==', gallery)
-      .orderBy('createdAt', 'desc')
-    context.bindFirestoreRef('list', articlesRef)
+    const { rootState, bindFirestoreRef } = context
+    const { app } = rootState
+    if (gallery !== app.gallery || category !== app.category) {
+      let articlesRef = db
+        .collection(`categories/${category}/articles`)
+        .orderBy('createdAt', 'desc')
+      if (gallery) {
+        const galleryRef = db.doc(`categories/${category}/galleries/${gallery}`)
+        articlesRef = articlesRef.where('gallery', '==', galleryRef)
+      }
+      return bindFirestoreRef('list', articlesRef)
+    }
   }),
-  unbindArticles: firestoreAction(function (context) {
-    context.unbindFirestoreRef('list')
-  }),
-  createArticle: async function (context, { params, article }) {
+  createArticle: async function (_, { params, article }) {
     const { category, gallery } = params
-    const articlesRef = db
-      .collection('categories')
-      .doc(category)
-      .collection('articles')
-
+    const articlesRef = db.collection(`categories/${category}/articles`)
     const payload = {
       ...article,
       // uid: '',
-      gallery,
+      gallery: db.doc(`categories/${category}/galleries/${gallery}`),
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
       views: 0,
       version: 0,
@@ -46,7 +44,6 @@ export const actions = {
       dislikes: [],
       deleted: false,
     }
-
     const { id } = await articlesRef.add(payload)
     await articlesRef.doc(id).collection('versions').doc('0').set({
       title: payload.title,
@@ -54,18 +51,11 @@ export const actions = {
       updatedAt: payload.createdAt,
       deleted: payload.deleted,
     })
-
     $nuxt.$router.push(`/categories/${category}/${gallery}/${id}`)
   },
-  getArticle: async function (context, { category, articleId }) {
-    const article = await db
-      .collection('categories')
-      .doc(category)
-      .collection('articles')
-      .doc(articleId)
-      .get()
-      .then(doc => doc.data())
-
-    context.commit('SET_ARTICLE', article)
+  setArticle: async function (context, articleId) {
+    const { state, commit } = context
+    const article = state.list.find(article => article.id === articleId)
+    commit('SET_ARTICLE', article)
   },
 }

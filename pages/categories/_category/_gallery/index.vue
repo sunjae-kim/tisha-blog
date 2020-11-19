@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="gallery-list">
     <GalleryTitle
       :category="$route.params.category"
       :gallery="$route.params.gallery"
@@ -10,7 +10,7 @@
         :to="`/categories/${$route.params.category}/${$route.params.gallery}/write`"
         >새 글 작성</nuxt-link
       >
-      <ul>
+      <ul class="article-list">
         <li class="header">
           <ul>
             <li>제목</li>
@@ -21,16 +21,16 @@
         </li>
         <li class="item" v-for="article in articleList" :key="article.id">
           <ul>
-            <li>
+            <li style="text-align: start">
               <nuxt-link
-                :to="`/categories/${$route.params.category}/${$route.params.gallery}/${article.id}`"
+                :to="`/categories/${$route.params.category}/${article.gallery.name}/${article.id}`"
                 @click.native="$store.commit('article/SET_ARTICLE', article)"
                 >{{ article.title }}</nuxt-link
               >
             </li>
             <li>{{ article.uid || 'anonymous' }}</li>
-            <li :style="{ textAlign: 'center' }">{{ article.likes.length }}</li>
-            <li :style="{ textAlign: 'center' }">
+            <li>{{ article.likes.length }}</li>
+            <li>
               {{ article.createdAt | formatTime }}
             </li>
           </ul>
@@ -57,10 +57,12 @@ export default {
     ...mapActions({
       bindArticles: 'article/bindArticles',
       createArticle: 'article/createArticle',
+      setCategoryAndGallery: 'app/setCategoryAndGallery',
     }),
   },
-  created: function () {
-    this.bindArticles(this.$route.params)
+  created: async function () {
+    await this.bindArticles(this.$route.params)
+    this.setCategoryAndGallery(this.$route.params)
   },
   filters: {
     formatTime,
@@ -69,17 +71,26 @@ export default {
 </script>
 
 <style>
-div.list {
+div.gallery-list {
   display: flex;
   flex-flow: column;
   height: 100%;
 }
 
-div.list * {
+div.gallery-list * {
   animation: fadein 200ms;
 }
 
-div.list section {
+div.gallery-list a {
+  display: inline-block;
+  color: #333333;
+}
+
+div.gallery-list a:hover {
+  color: rgba(55, 135, 216);
+}
+
+div.gallery-list section {
   max-width: 760pt;
   width: 100%;
   margin: 0 auto;
@@ -87,45 +98,38 @@ div.list section {
   color: #333333;
 }
 
-div.list section a {
-  display: inline-block;
-  color: #333333;
-}
-
-div.list section .write-link {
+div.gallery-list section .write-link {
   padding: 8pt 0;
 }
 
-div.list section a:hover {
-  color: rgba(55, 135, 216);
+div.gallery-list section > ul.article-list {
+  font-size: 10pt;
 }
 
-div.list section .item ul {
+div.gallery-list section > ul.article-list a {
+  width: 100%;
+}
+
+div.gallery-list section > ul.article-list > li {
+  padding: 2pt;
+}
+
+div.gallery-list section > ul.article-list > li + li {
+  border-bottom: 1pt solid #ededed;
+}
+
+div.gallery-list section > ul.article-list > li > ul {
   display: grid;
   grid-template-columns: 5fr 1fr 1fr 1fr;
 }
 
-div.list section .item a {
-  width: 100%;
-}
-
-div.list section > ul > li {
-  padding: 2pt;
-}
-
-div.list section > ul > li + li {
-  border-bottom: 1pt solid #ededed;
-}
-
-div.list li.header {
+div.gallery-list section > ul.article-list > li.header {
   font-weight: 600;
   border-top: 1pt solid #ededed;
   border-bottom: 1pt solid #ededed;
 }
 
-div.list li.header ul {
-  display: grid;
-  grid-template-columns: 5fr 1fr 1fr 1fr;
+div.gallery-list section > ul.article-list > li > ul > li {
   text-align: center;
 }
 </style>

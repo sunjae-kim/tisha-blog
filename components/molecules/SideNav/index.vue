@@ -86,10 +86,7 @@ export default {
 }
 
 .side-nav * {
-  animation: fadein 500ms;
-  -moz-animation: fadein 500ms; /* Firefox */
-  -webkit-animation: fadein 500ms; /* Safari and Chrome */
-  -o-animation: fadein 500ms; /* Opera */
+  animation: fadein 200ms;
 }
 
 .side-nav .menu {

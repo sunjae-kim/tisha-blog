@@ -78,7 +78,7 @@ export default {
 .header-nav ul.categories > li > a.nuxt-link-active {
   color: white;
   border-bottom: 2pt solid white;
-  transition: border-bottom-color 0.6s linear;
+  transition: border-bottom-color 500ms linear;
 }
 
 .header-nav ul.drop-down-menu {

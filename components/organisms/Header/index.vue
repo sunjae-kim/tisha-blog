@@ -67,10 +67,7 @@ header {
 }
 
 header * {
-  animation: fadein 1s;
-  -moz-animation: fadein 1s; /* Firefox */
-  -webkit-animation: fadein 1s; /* Safari and Chrome */
-  -o-animation: fadein 1s; /* Opera */
+  animation: fadein 200ms;
 }
 
 header .wrapper {
@@ -81,7 +78,7 @@ header .wrapper {
   max-width: 760pt;
   margin: 0 auto;
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  transition: padding 500ms;
+  transition: padding 200ms;
   height: 100%;
 }
 

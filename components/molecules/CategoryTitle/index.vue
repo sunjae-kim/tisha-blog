@@ -1,18 +1,18 @@
 <template>
-  <p class="gallery-title">
-    <nuxt-link :to="category.path">{{ category.label }}</nuxt-link>
-    <span v-if="gallery.label">
-      ·
-      <nuxt-link :to="gallery.path">{{ gallery.label }}</nuxt-link>
-    </span>
-  </p>
+  <div class="category-title">
+    <span
+      ><nuxt-link :to="category.path">{{ category.label }}</nuxt-link></span
+    ><span v-if="labels.gallery"
+      ><nuxt-link :to="gallery.path">{{ gallery.label }}</nuxt-link></span
+    >
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'GalleryTitle',
+  name: 'CategoryTitle',
   computed: {
     ...mapGetters({ labels: 'app/labels' }),
     category: function () {
@@ -31,8 +31,8 @@ export default {
 }
 </script>
 
-<style>
-.gallery-title {
+<style scoped>
+.category-title {
   max-width: 760pt;
   width: 100%;
   margin: 16pt auto;
@@ -42,16 +42,21 @@ export default {
   padding: 0 24pt;
 }
 
-.gallery-title a {
+.category-title a {
   color: black;
 }
 
-.gallery-title a:hover {
+.category-title a:hover {
   color: rgba(55, 135, 216);
 }
 
+.category-title span + span:before {
+  content: '·';
+  margin: 0 8pt;
+}
+
 @media (max-width: 768px) {
-  .gallery-title {
+  .category-title {
     padding: 0 8pt;
   }
 }

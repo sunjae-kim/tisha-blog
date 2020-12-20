@@ -5,28 +5,20 @@
         <button type="button" class="sidebar-icon" @click="toggleSideNav">
           <i class="fas fa-bars"></i>
         </button>
-        <h1 class="logo">
+        <span class="logo">
           <nuxt-link to="/">미요미</nuxt-link>
-        </h1>
+        </span>
         <HeaderNav />
       </div>
       <div class="menu">
-        <div v-if="user.uid" class="username">
+        <span v-if="user.uid" class="username">
           안녕하세요, {{ user.username }}님
-        </div>
-        <Button
-          v-if="user.uid"
+        </span>
+        <AppButton
           backgroundColor="white"
           color="black"
-          label="로그아웃"
-          @click.native="logout"
-        />
-        <Button
-          v-if="!user.uid"
-          backgroundColor="white"
-          color="black"
-          label="로그인"
-          @click.native="login"
+          :label="user.uid ? '로그아웃' : '로그인'"
+          @click.native="onAuthBtnClick"
         />
       </div>
     </div>
@@ -35,12 +27,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import HeaderNav from '@/components/molecules/HeaderNav'
-import Button from '@/components/atoms/Button'
+import HeaderNav from './HeaderNav'
+import AppButton from '@/components/atoms/AppButton'
 
 export default {
   name: 'Header',
-  components: { Button, HeaderNav },
+  components: { AppButton, HeaderNav },
   computed: {
     ...mapState(['user']),
   },
@@ -48,26 +40,27 @@ export default {
     ...mapActions({
       toggleSideNav: 'app/toggleSideNav',
       logout: 'user/logout',
+      login: 'user/login',
     }),
-    login: function () {
-      this.$store.dispatch('user/login', { uid: 1, username: 'Jason123' })
+    onAuthBtnClick: function () {
+      if (this.user.uid) {
+        this.logout()
+      } else {
+        // TEMP.
+        this.login({ uid: 1, username: 'Jason123' })
+      }
     },
   },
 }
 </script>
 
-<style>
+<style scoped>
 header {
   position: fixed;
   top: 0;
   width: 100%;
   height: 48pt;
-  color: white;
   background-color: rgb(0, 78, 162);
-}
-
-header * {
-  animation: fadein 200ms;
 }
 
 header .wrapper {
@@ -77,8 +70,7 @@ header .wrapper {
   padding: 0 24pt;
   max-width: 760pt;
   margin: 0 auto;
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  transition: padding 200ms;
+  transition: padding 300ms;
   height: 100%;
 }
 
@@ -89,33 +81,24 @@ header .menu {
   height: 100%;
 }
 
-header h1.logo {
+header .sidebar-icon {
+  cursor: pointer;
+  width: 32pt;
+  margin-right: 8pt;
+  padding: 8pt;
+  background-color: transparent;
+  border: none;
+  font-size: 12pt;
+}
+
+header .logo {
   font-weight: 900;
   font-size: 24pt;
   display: inline-block;
 }
 
-header h1.logo > a {
-  color: white;
-  text-decoration: none;
-}
-
-header .menu .username {
+header .username {
   margin-right: 16pt;
-}
-
-header button + button {
-  margin-left: 8pt;
-}
-
-header .sidebar-icon {
-  cursor: pointer;
-  margin-right: 8pt;
-  padding: 8pt;
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-size: 12pt;
 }
 
 @media (max-width: 576px) {
@@ -128,5 +111,12 @@ header .sidebar-icon {
   header .wrapper {
     padding: 8pt;
   }
+}
+</style>
+
+<style>
+header * {
+  color: white;
+  animation: fadein 300ms;
 }
 </style>

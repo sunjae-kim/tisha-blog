@@ -1,9 +1,6 @@
 <template>
   <div class="gallery-list">
-    <GalleryTitle
-      :category="$route.params.category"
-      :gallery="$route.params.gallery"
-    />
+    <CategoryTitle />
     <section>
       <nuxt-link
         class="write-link"
@@ -42,13 +39,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import GalleryTitle from '@/components/molecules/GalleryTitle'
+import CategoryTitle from '@/components/molecules/CategoryTitle'
 import { formatTime } from '@/utils'
 
 export default {
   name: 'Gallery',
   components: {
-    GalleryTitle,
+    CategoryTitle,
   },
   computed: {
     ...mapState({ articleList: state => state.article.list }),
@@ -70,10 +67,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 div.gallery-list {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   height: 100%;
 }
 

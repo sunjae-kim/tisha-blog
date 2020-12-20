@@ -1,9 +1,6 @@
 <template>
   <div class="write">
-    <GalleryTitle
-      :category="$route.params.category"
-      :gallery="$route.params.gallery"
-    />
+    <CategoryTitle />
     <form class="article-form" @submit="onSubmit">
       <div class="field">
         <label class="required" for="title">글 제목</label>
@@ -18,21 +15,21 @@
         <label class="required" for="content">내용</label>
         <textarea id="content" v-model="article.content"></textarea>
       </div>
-      <div class="field"><Button type="submit" label="만들기" /></div>
+      <div class="field"><AppButton type="submit" label="만들기" /></div>
     </form>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Button from '@/components/atoms/Button'
-import GalleryTitle from '@/components/molecules/GalleryTitle'
+import AppButton from '@/components/atoms/AppButton'
+import CategoryTitle from '@/components/molecules/CategoryTitle'
 
 export default {
   name: 'Write',
   components: {
-    Button,
-    GalleryTitle,
+    AppButton,
+    CategoryTitle,
   },
   data: function () {
     return {
@@ -59,7 +56,7 @@ export default {
 <style>
 div.write {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -69,7 +66,7 @@ div.write * {
 
 form.article-form {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   margin: 0 auto;
   padding: 0 24pt;
   width: 760pt;

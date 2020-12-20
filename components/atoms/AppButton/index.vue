@@ -1,26 +1,24 @@
 <template>
-  <button :type="type" :class="classes" :style="style">
+  <button :type="type" :style="style">
     {{ label }}
   </button>
 </template>
 
 <script>
 export default {
-  name: 'Button',
+  name: 'AppButton',
   props: {
     label: {
       type: String,
       required: true,
     },
-    outlined: {
-      type: Boolean,
-      default: false,
-    },
     color: {
       type: String,
+      default: 'white',
     },
     backgroundColor: {
       type: String,
+      default: 'rgb(0, 78, 162)',
     },
     type: {
       type: String,
@@ -28,12 +26,6 @@ export default {
     },
   },
   computed: {
-    classes: function () {
-      return {
-        button: true,
-        outlined: this.outlined,
-      }
-    },
     style: function () {
       return {
         color: this.color,
@@ -44,11 +36,12 @@ export default {
 }
 </script>
 
-<style>
-.button {
+<style scoped>
+button {
   display: inline-block;
   font-weight: 700;
   font-size: 10pt;
+  padding: 0;
   border: 0;
   border-radius: 8pt;
   cursor: pointer;
@@ -56,14 +49,5 @@ export default {
   width: 56pt;
   height: 24pt;
   line-height: 24pt;
-
-  color: white;
-  background-color: rgb(0, 78, 162);
-}
-
-.button.outlined {
-  color: #333;
-  background-color: transparent;
-  box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 1pt inset;
 }
 </style>

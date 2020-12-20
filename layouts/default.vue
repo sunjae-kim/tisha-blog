@@ -7,9 +7,8 @@
 </template>
 
 <script>
-import SideNav from '@/components/molecules/SideNav'
+import SideNav from '@/components/organisms/SideNav'
 import Header from '@/components/organisms/Header'
-import '@/assets/global.css'
 
 export default {
   components: {

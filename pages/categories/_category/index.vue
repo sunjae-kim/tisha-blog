@@ -1,9 +1,6 @@
 <template>
   <div class="category-list">
-    <GalleryTitle
-      :category="$route.params.category"
-      :gallery="$route.params.gallery"
-    />
+    <CategoryTitle />
     <section>
       <ul class="article-list">
         <li class="header">
@@ -42,13 +39,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import GalleryTitle from '@/components/molecules/GalleryTitle'
+import CategoryTitle from '@/components/molecules/CategoryTitle'
 import { formatTime } from '@/utils'
 
 export default {
   name: 'Category',
   components: {
-    GalleryTitle,
+    CategoryTitle,
   },
   computed: {
     ...mapState({ articleList: state => state.article.list }),
@@ -73,7 +70,7 @@ export default {
 <style>
 div.category-list {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   height: 100%;
 }
 

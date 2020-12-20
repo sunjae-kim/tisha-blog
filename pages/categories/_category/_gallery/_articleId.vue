@@ -1,9 +1,6 @@
 <template>
   <div class="detail">
-    <GalleryTitle
-      :category="$route.params.category"
-      :gallery="$route.params.gallery"
-    />
+    <CategoryTitle />
     <section v-if="article.title">
       <h1 class="title">{{ article.title }}</h1>
       <ul class="meta">
@@ -26,12 +23,12 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import _ from 'lodash'
-import GalleryTitle from '@/components/molecules/GalleryTitle'
+import CategoryTitle from '@/components/molecules/CategoryTitle'
 import { formatTime } from '@/utils'
 
 export default {
   name: 'ArticleDetail',
-  components: { GalleryTitle },
+  components: { CategoryTitle },
   computed: {
     ...mapState({
       article: state => state.article.detail,
@@ -64,7 +61,7 @@ export default {
 <style>
 div.detail {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   height: 100%;
 }
 
